@@ -123,24 +123,39 @@ Logs are written to:
 - File: `logs/log-{date}.txt`
 
 Log levels and configuration can be adjusted in `appsettings.json`.
+
 Log example after testing
+
 [11:38:27 INF] Background reminder service started
+
 [11:38:31 INF] Patient logged in with email: user@examplew.com
+
 [11:39:21 INF] Doctor logged in with email: user@examplew.com
-[11:39:33 INF] Patient logged in with email: user@examplew.com
+
 [11:39:46 INF] New appointment created with ID: 01247177-3cea-4c4c-c1fb-08ddf4fc9786
+
 [11:39:55 INF] Doctor logged in with email: user@examplew.com
+
 [11:40:02 INF] Appointment completed with ID: 01247177-3cea-4c4c-c1fb-08ddf4fc9786
+
 [11:45:58 INF] New appointment created with ID: 56ad5448-d2fa-480d-c1fc-08ddf4fc9786
+
 [12:02:55 INF] Doctor updated with ID: ce970ffb-8840-4cd3-b316-8ee4ab1789d9
-[12:03:35 INF] Patient logged in with email: user@examplew.com
+
 [12:19:58 INF] Patient updated with ID: 91c83dbc-7497-4710-a97d-d973833a15e8
+
 [12:38:27 INF] Sending reminder for appointment 32caecc5-29b2-4784-7c6e-08ddf4f2c073 - Patient: Ahmed Elhoshy (user@examplew.com), Doctor: string string (user@example.com), Date: 09/17/2025 19:30:00
+
 [12:38:27 INF] Processed 1 upcoming appointments for reminders
+
 [13:04:27 INF] New patient registered with ID: 6e62d113-f2ad-4597-a6e3-4259069bbcb7
+
 [13:05:45 INF] New doctor registered with ID: 823b7969-557a-4326-b59d-4250b771a1cd
+
 [13:05:48 INF] Doctor logged in with email: ahmedelhoshy@gmail.com
+
 [13:38:27 INF] Sending reminder for appointment 32caecc5-29b2-4784-7c6e-08ddf4f2c073 - Patient: Ahmed Elhoshy (user@examplew.com), Doctor: string string (user@example.com), Date: 09/17/2025 19:30:00
+
 
 ## Database Schema
 
