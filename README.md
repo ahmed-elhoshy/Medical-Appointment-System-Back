@@ -29,43 +29,6 @@ A comprehensive medical appointment management system built with ASP.NET Core We
 - SQL Server (LocalDB or full instance)
 - Visual Studio 2022 or VS Code
 
-## Setup Instructions
-
-### 1. Clone and Navigate to Project
-
-```bash
-cd RamyroTask
-```
-
-### 2. Restore Dependencies
-
-```bash
-dotnet restore
-```
-
-### 3. Update Database Connection
-
-Update the connection string in `appsettings.json` if needed:
-
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=MedicalAppointmentDB;Trusted_Connection=true;MultipleActiveResultSets=true"
-  }
-}
-```
-
-### 4. Run Database Migrations
-
-```bash
-dotnet ef database update
-```
-
-### 5. Run the Application
-
-```bash
-dotnet run
-```
 
 The API will be available at:
 
