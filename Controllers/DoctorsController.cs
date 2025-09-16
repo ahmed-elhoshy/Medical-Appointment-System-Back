@@ -5,6 +5,7 @@ using RamyroTask.Entities;
 using RamyroTask.Repositories;
 using RamyroTask.Services;
 using System.Security.Claims;
+using AutoMapper;
 
 namespace RamyroTask.Controllers
 {
@@ -15,12 +16,18 @@ namespace RamyroTask.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly AuthService _authService;
         private readonly ILogger<DoctorsController> _logger;
+        private readonly IMapper _mapper;
 
-        public DoctorsController(IUnitOfWork unitOfWork, AuthService authService, ILogger<DoctorsController> logger)
+        public DoctorsController(
+            IUnitOfWork unitOfWork,
+            AuthService authService,
+            ILogger<DoctorsController> logger,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _authService = authService;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,16 +37,7 @@ namespace RamyroTask.Controllers
             try
             {
                 var doctors = await _unitOfWork.Doctors.GetAllAsync();
-                var result = doctors.Select(d => new DoctorDto
-                {
-                    Id = d.Id,
-                    FirstName = d.FirstName,
-                    LastName = d.LastName,
-                    Specialization = d.Specialization,
-                    Email = d.Email,
-                    PhoneNumber = d.PhoneNumber,
-                    CreatedAt = d.CreatedAt
-                });
+                var result = _mapper.Map<IEnumerable<DoctorDto>>(doctors);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -109,16 +107,7 @@ namespace RamyroTask.Controllers
                     return NotFound();
                 }
 
-                var doctorDto = new DoctorDto
-                {
-                    Id = doctor.Id,
-                    FirstName = doctor.FirstName,
-                    LastName = doctor.LastName,
-                    Specialization = doctor.Specialization,
-                    Email = doctor.Email,
-                    PhoneNumber = doctor.PhoneNumber,
-                    CreatedAt = doctor.CreatedAt
-                };
+                var doctorDto = _mapper.Map<DoctorDto>(doctor);
 
                 return Ok(doctorDto);
             }
@@ -147,32 +136,14 @@ namespace RamyroTask.Controllers
                     return NotFound();
                 }
 
-                if (!string.IsNullOrEmpty(updateDoctorDto.FirstName))
-                    doctor.FirstName = updateDoctorDto.FirstName;
-                if (!string.IsNullOrEmpty(updateDoctorDto.LastName))
-                    doctor.LastName = updateDoctorDto.LastName;
-                if (!string.IsNullOrEmpty(updateDoctorDto.Specialization))
-                    doctor.Specialization = updateDoctorDto.Specialization;
-                if (!string.IsNullOrEmpty(updateDoctorDto.Email))
-                    doctor.Email = updateDoctorDto.Email;
-                if (!string.IsNullOrEmpty(updateDoctorDto.PhoneNumber))
-                    doctor.PhoneNumber = updateDoctorDto.PhoneNumber;
+                _mapper.Map(updateDoctorDto, doctor);
 
                 _unitOfWork.Doctors.Update(doctor);
                 await _unitOfWork.SaveChangesAsync();
 
                 _logger.LogInformation("Doctor updated with ID: {DoctorId}", id);
 
-                var doctorDto = new DoctorDto
-                {
-                    Id = doctor.Id,
-                    FirstName = doctor.FirstName,
-                    LastName = doctor.LastName,
-                    Specialization = doctor.Specialization,
-                    Email = doctor.Email,
-                    PhoneNumber = doctor.PhoneNumber,
-                    CreatedAt = doctor.CreatedAt
-                };
+                var doctorDto = _mapper.Map<DoctorDto>(doctor);
 
                 return Ok(doctorDto);
             }

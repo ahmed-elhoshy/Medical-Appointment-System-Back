@@ -6,6 +6,7 @@ using RamyroTask.Data;
 using RamyroTask.Helpers;
 using RamyroTask.Repositories;
 using RamyroTask.Services;
+using RamyroTask.Mappings;
 using Serilog;
 using System.Text;
 
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>() ?? new JwtSettings();
 builder.Services.AddSingleton(jwtSettings);

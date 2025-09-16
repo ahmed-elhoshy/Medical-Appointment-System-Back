@@ -6,6 +6,7 @@ using RamyroTask.DTOs;
 using RamyroTask.Entities;
 using RamyroTask.Repositories;
 using System.Security.Claims;
+using AutoMapper;
 
 namespace RamyroTask.Controllers
 {
@@ -17,12 +18,18 @@ namespace RamyroTask.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ApplicationDbContext _context;
         private readonly ILogger<AppointmentsController> _logger;
+        private readonly IMapper _mapper;
 
-        public AppointmentsController(IUnitOfWork unitOfWork, ApplicationDbContext context, ILogger<AppointmentsController> logger)
+        public AppointmentsController(
+            IUnitOfWork unitOfWork,
+            ApplicationDbContext context,
+            ILogger<AppointmentsController> logger,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -53,33 +60,15 @@ namespace RamyroTask.Controllers
                     return BadRequest("Appointment date must be in the future");
                 }
 
-                var appointment = new Appointment
-                {
-                    PatientId = createAppointmentDto.PatientId,
-                    DoctorId = createAppointmentDto.DoctorId,
-                    AppointmentDate = createAppointmentDto.AppointmentDate,
-                    Reason = createAppointmentDto.Reason,
-                    Status = AppointmentStatus.Scheduled
-                };
+                var appointment = _mapper.Map<Appointment>(createAppointmentDto);
+                appointment.Status = AppointmentStatus.Scheduled;
 
                 await _unitOfWork.Appointments.AddAsync(appointment);
                 await _unitOfWork.SaveChangesAsync();
 
                 _logger.LogInformation("New appointment created with ID: {AppointmentId}", appointment.Id);
 
-                var appointmentDto = new AppointmentDto
-                {
-                    Id = appointment.Id,
-                    PatientId = appointment.PatientId,
-                    DoctorId = appointment.DoctorId,
-                    AppointmentDate = appointment.AppointmentDate,
-                    Reason = appointment.Reason,
-                    Status = appointment.Status,
-                    CreatedAt = appointment.CreatedAt,
-                    PatientName = $"{patient.FirstName} {patient.LastName}",
-                    DoctorName = $"{doctor.FirstName} {doctor.LastName}",
-                    DoctorSpecialization = doctor.Specialization
-                };
+                var appointmentDto = _mapper.Map<AppointmentDto>(appointment);
 
                 return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointmentDto);
             }
@@ -118,19 +107,7 @@ namespace RamyroTask.Controllers
                     if (appointment.DoctorId != userId) return Forbid();
                 }
 
-                var appointmentDto = new AppointmentDto
-                {
-                    Id = appointment.Id,
-                    PatientId = appointment.PatientId,
-                    DoctorId = appointment.DoctorId,
-                    AppointmentDate = appointment.AppointmentDate,
-                    Reason = appointment.Reason,
-                    Status = appointment.Status,
-                    CreatedAt = appointment.CreatedAt,
-                    PatientName = $"{appointment.Patient.FirstName} {appointment.Patient.LastName}",
-                    DoctorName = $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}",
-                    DoctorSpecialization = appointment.Doctor.Specialization
-                };
+                var appointmentDto = _mapper.Map<AppointmentDto>(appointment);
 
                 return Ok(appointmentDto);
             }
@@ -160,19 +137,7 @@ namespace RamyroTask.Controllers
                     .OrderBy(a => a.AppointmentDate)
                     .ToListAsync();
 
-                var appointmentDtos = appointments.Select(a => new AppointmentDto
-                {
-                    Id = a.Id,
-                    PatientId = a.PatientId,
-                    DoctorId = a.DoctorId,
-                    AppointmentDate = a.AppointmentDate,
-                    Reason = a.Reason,
-                    Status = a.Status,
-                    CreatedAt = a.CreatedAt,
-                    PatientName = $"{a.Patient.FirstName} {a.Patient.LastName}",
-                    DoctorName = $"{a.Doctor.FirstName} {a.Doctor.LastName}",
-                    DoctorSpecialization = a.Doctor.Specialization
-                });
+                var appointmentDtos = _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
 
                 return Ok(appointmentDtos);
             }
@@ -202,19 +167,7 @@ namespace RamyroTask.Controllers
                     .OrderBy(a => a.AppointmentDate)
                     .ToListAsync();
 
-                var appointmentDtos = appointments.Select(a => new AppointmentDto
-                {
-                    Id = a.Id,
-                    PatientId = a.PatientId,
-                    DoctorId = a.DoctorId,
-                    AppointmentDate = a.AppointmentDate,
-                    Reason = a.Reason,
-                    Status = a.Status,
-                    CreatedAt = a.CreatedAt,
-                    PatientName = $"{a.Patient.FirstName} {a.Patient.LastName}",
-                    DoctorName = $"{a.Doctor.FirstName} {a.Doctor.LastName}",
-                    DoctorSpecialization = a.Doctor.Specialization
-                });
+                var appointmentDtos = _mapper.Map<IEnumerable<AppointmentDto>>(appointments);
 
                 return Ok(appointmentDtos);
             }

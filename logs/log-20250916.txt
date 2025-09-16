@@ -162,3 +162,11 @@
 2025-09-16 14:54:26.533 +03:00 [INF] Doctor logged in with email: user@examplew.com
 2025-09-16 15:38:27.368 +03:00 [INF] Sending reminder for appointment "32caecc5-29b2-4784-7c6e-08ddf4f2c073" - Patient: Ahmed Elhoshy (user@examplew.com), Doctor: string string (user@example.com), Date: "2025-09-17T19:30:00.0000000"
 2025-09-16 15:38:27.482 +03:00 [INF] Processed 1 upcoming appointments for reminders
+2025-09-16 16:09:46.387 +03:00 [INF] Background reminder service started
+2025-09-16 16:10:10.299 +03:00 [INF] Patient logged in with email: user@examplew.com
+2025-09-16 16:10:32.918 +03:00 [INF] Patient updated with ID: "91c83dbc-7497-4710-a97d-d973833a15e8"
+2025-09-16 16:11:02.061 +03:00 [INF] New appointment created with ID: "eeaed8e0-9018-4402-f2d6-08ddf5227c56"
+2025-09-16 16:11:52.573 +03:00 [INF] Doctor logged in with email: ahmedelhoshy@gmail.com
+2025-09-16 16:11:59.667 +03:00 [INF] Appointment cancelled with ID: "eeaed8e0-9018-4402-f2d6-08ddf5227c56"
+2025-09-16 16:25:36.764 +03:00 [INF] Background reminder service started
+2025-09-16 16:27:19.348 +03:00 [INF] Patient logged in with email: user@examplew.com

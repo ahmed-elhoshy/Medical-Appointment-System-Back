@@ -5,6 +5,7 @@ using RamyroTask.Entities;
 using RamyroTask.Repositories;
 using RamyroTask.Services;
 using System.Security.Claims;
+using AutoMapper;
 
 namespace RamyroTask.Controllers
 {
@@ -15,12 +16,18 @@ namespace RamyroTask.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly AuthService _authService;
         private readonly ILogger<PatientsController> _logger;
+        private readonly IMapper _mapper;
 
-        public PatientsController(IUnitOfWork unitOfWork, AuthService authService, ILogger<PatientsController> logger)
+        public PatientsController(
+            IUnitOfWork unitOfWork,
+            AuthService authService,
+            ILogger<PatientsController> logger,
+            IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _authService = authService;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,16 +37,7 @@ namespace RamyroTask.Controllers
             try
             {
                 var patients = await _unitOfWork.Patients.GetAllAsync();
-                var result = patients.Select(p => new PatientDto
-                {
-                    Id = p.Id,
-                    FirstName = p.FirstName,
-                    LastName = p.LastName,
-                    DateOfBirth = p.DateOfBirth,
-                    Email = p.Email,
-                    PhoneNumber = p.PhoneNumber,
-                    CreatedAt = p.CreatedAt
-                });
+                var result = _mapper.Map<IEnumerable<PatientDto>>(patients);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -109,16 +107,7 @@ namespace RamyroTask.Controllers
                     return NotFound();
                 }
 
-                var patientDto = new PatientDto
-                {
-                    Id = patient.Id,
-                    FirstName = patient.FirstName,
-                    LastName = patient.LastName,
-                    DateOfBirth = patient.DateOfBirth,
-                    Email = patient.Email,
-                    PhoneNumber = patient.PhoneNumber,
-                    CreatedAt = patient.CreatedAt
-                };
+                var patientDto = _mapper.Map<PatientDto>(patient);
 
                 return Ok(patientDto);
             }
@@ -147,32 +136,14 @@ namespace RamyroTask.Controllers
                     return NotFound();
                 }
 
-                if (!string.IsNullOrEmpty(updatePatientDto.FirstName))
-                    patient.FirstName = updatePatientDto.FirstName;
-                if (!string.IsNullOrEmpty(updatePatientDto.LastName))
-                    patient.LastName = updatePatientDto.LastName;
-                if (updatePatientDto.DateOfBirth.HasValue)
-                    patient.DateOfBirth = updatePatientDto.DateOfBirth.Value;
-                if (!string.IsNullOrEmpty(updatePatientDto.Email))
-                    patient.Email = updatePatientDto.Email;
-                if (!string.IsNullOrEmpty(updatePatientDto.PhoneNumber))
-                    patient.PhoneNumber = updatePatientDto.PhoneNumber;
+                _mapper.Map(updatePatientDto, patient);
 
                 _unitOfWork.Patients.Update(patient);
                 await _unitOfWork.SaveChangesAsync();
 
                 _logger.LogInformation("Patient updated with ID: {PatientId}", id);
 
-                var patientDto = new PatientDto
-                {
-                    Id = patient.Id,
-                    FirstName = patient.FirstName,
-                    LastName = patient.LastName,
-                    DateOfBirth = patient.DateOfBirth,
-                    Email = patient.Email,
-                    PhoneNumber = patient.PhoneNumber,
-                    CreatedAt = patient.CreatedAt
-                };
+                var patientDto = _mapper.Map<PatientDto>(patient);
 
                 return Ok(patientDto);
             }
@@ -182,11 +153,6 @@ namespace RamyroTask.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-    }
-
-    public class LoginRequest
-    {
-        public string Email { get; set; } = string.Empty;
     }
 }
 

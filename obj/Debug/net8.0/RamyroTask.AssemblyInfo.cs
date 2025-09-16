@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RamyroTask")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d252d5aae66ec2394947048319f0bfb81c8b0073")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fcf0545d38bd7d85986b4a2b666c11447d354987")]
 [assembly: System.Reflection.AssemblyProductAttribute("RamyroTask")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RamyroTask")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
