@@ -47,11 +47,13 @@ The API will be available at:
 
 ### Patients (Requires JWT Token)
 
+- `GET /api/patients` - Get all patients details
 - `GET /api/patients/{id}` - Get patient details
 - `PUT /api/patients/{id}` - Update patient information
 
 ### Doctors (Requires JWT Token)
 
+- `GET /api/doctors` - Get all doctors details
 - `GET /api/doctors/{id}` - Get doctor details
 - `PUT /api/doctors/{id}` - Update doctor information
 
@@ -62,6 +64,8 @@ The API will be available at:
 - `GET /api/appointments/patient/{patientId}` - Get patient's appointments
 - `GET /api/appointments/doctor/{doctorId}` - Get doctor's appointments
 - `PUT /api/appointments/{id}/cancel` - Cancel appointment
+- `PUT /api/appointments/{id}/complete` - Complete appointment
+
 
 ## Authentication
 
