@@ -23,6 +23,32 @@ namespace RamyroTask.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Doctor")]
+        public async Task<ActionResult<IEnumerable<PatientDto>>> GetAll()
+        {
+            try
+            {
+                var patients = await _unitOfWork.Patients.GetAllAsync();
+                var result = patients.Select(p => new PatientDto
+                {
+                    Id = p.Id,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    DateOfBirth = p.DateOfBirth,
+                    Email = p.Email,
+                    PhoneNumber = p.PhoneNumber,
+                    CreatedAt = p.CreatedAt
+                });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting all patients");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpPost("register")]
         public async Task<ActionResult<PatientDto>> Register([FromBody] RegisterPatientRequest request)
         {

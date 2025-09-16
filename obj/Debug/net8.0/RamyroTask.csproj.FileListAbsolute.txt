@@ -149,3 +149,4 @@ D:\kolya\iti\RamyroTask\obj\Debug\net8.0\RamyroTask.genruntimeconfig.cache
 D:\kolya\iti\RamyroTask\obj\Debug\net8.0\ref\RamyroTask.dll
 D:\kolya\iti\RamyroTask\bin\Debug\net8.0\BCrypt.Net-Next.dll
 D:\kolya\iti\RamyroTask\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+D:\kolya\iti\RamyroTask\obj\Debug\net8.0\RamyroTask.sourcelink.json

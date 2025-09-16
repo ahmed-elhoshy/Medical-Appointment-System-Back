@@ -48,7 +48,7 @@
               "RelativeDocumentMoniker": "Controllers\\PatientsController.cs",
               "ToolTip": "D:\\kolya\\iti\\RamyroTask\\Controllers\\PatientsController.cs",
               "RelativeToolTip": "Controllers\\PatientsController.cs",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAowJkAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAKQAAAAAAAAAAAAowKcAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-15T13:39:32.485Z",
               "EditorCaption": ""
@@ -63,8 +63,7 @@
               "RelativeToolTip": "Controllers\\DoctorsController.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-15T13:39:26.053Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-15T13:39:26.053Z"
             },
             {
               "$type": "Document",
@@ -76,8 +75,7 @@
               "RelativeToolTip": "Controllers\\AppointmentsController.cs",
               "ViewState": "AgIAAIAAAAAAAAAAAAAgwB4AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-15T13:37:30.703Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-15T13:37:30.703Z"
             },
             {
               "$type": "Document",
@@ -89,8 +87,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAC8AAAAAAAAAAAAAAFcAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-15T09:46:40.055Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-15T09:46:40.055Z"
             },
             {
               "$type": "Document",

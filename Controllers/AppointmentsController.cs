@@ -273,6 +273,49 @@ namespace RamyroTask.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpPut("{id}/complete")]
+        [Authorize(Roles = "Doctor")]
+        public async Task<ActionResult> CompleteAppointment(Guid id)
+        {
+            try
+            {
+                var appointment = await _unitOfWork.Appointments.GetByIdAsync(id);
+                if (appointment == null)
+                {
+                    return NotFound();
+                }
+
+                var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? Guid.Empty.ToString());
+                if (appointment.DoctorId != userId)
+                {
+                    return Forbid();
+                }
+
+                if (appointment.Status == AppointmentStatus.Completed)
+                {
+                    return BadRequest("Appointment is already completed");
+                }
+
+                if (appointment.Status == AppointmentStatus.Cancelled)
+                {
+                    return BadRequest("Cannot complete a cancelled appointment");
+                }
+
+                appointment.Status = AppointmentStatus.Completed;
+                _unitOfWork.Appointments.Update(appointment);
+                await _unitOfWork.SaveChangesAsync();
+
+                _logger.LogInformation("Appointment completed with ID: {AppointmentId}", id);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error completing appointment with ID: {AppointmentId}", id);
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
 }
 
